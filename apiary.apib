@@ -1,0 +1,627 @@
+FORMAT: 1A
+HOST: http://localhost:3000/
+
+# API MySession
+L'API mySession est la normalisation des trois applications de mySession :  
+    - L'application formateur   
+    - L'application élève   
+    - L'application écran de diffusion
+
+# Authentification [/]
+## Authentification [POST]
+
++ Request (application/json)
+
+        {
+            "pseudo" : "LEVEQUE.ENZO",
+            "passwordUser" : MDP"
+        }
+
++ Response 200 (application/json)
+
+        { 
+            "message" : "Connexion réussie",
+            "data" : {
+                "idUser" : 1,
+                "pseudoUser" : "LEVEQUE.ENZO",
+                "passwordUser" : "MDP",
+                "firstNameUser" : "Enzo",
+                "nameUser" : "Leveque",
+                "emailUser" : "enzo.leveque@codes-rousseau.fr,
+                "mobileUser" : "00000000000",
+                "sessions" : [
+                    {
+                        "idSession" : 1,
+                        "nameSession" : "Session de cours Numéro 1 - Salle de cours",
+                        "lesson" : { idLesson : 1, nameLesson : "Première cours - Risque d'accident"}
+                    },
+                    {
+                        "idSession" : 2,
+                        "nameSession" : "Session N°4564543514"
+                        "lesson" : {}
+                    }
+                ],
+                "Lessons" : [
+                    {
+                        "idLesson" : 1, 
+                        "nameLesson" : "Première cours - Risque d'accident"
+                    }
+                ],
+                "Quizz" : [
+                    {
+                        "idQuizz" : 1,
+                        "numberOfQuestionQuizz" : 3,
+                        "Questions" : [
+                            {
+                                "idQuestion" : 1 ,
+                                "titleQuestion" : "Que signifie ce panneau ?",
+                                "responseQuestion" : "Sens interdit" ,
+                                "typeQuestion" : "qcm"
+                            }, 
+                            {
+                                "idQuestion" : 2 ,
+                                "titleQuestion" : "Que signifie ce panneau ?",
+                                "responseQuestion" : "Sens interdit" ,
+                                "typeQuestion" : "qcm"
+                            }, 
+                            {
+                                "idQuestion" : 3 ,
+                                "titleQuestion" : "Que signifie ce panneau ?",
+                                "responseQuestion" : "Sens interdit" ,
+                                "typeQuestion" : "qcm"
+                            }
+                        ]
+                    }
+                ],
+                "Questions" : [
+                    {
+                        "idQuestion" : 1 ,
+                        "titleQuestion" : "Que signifie ce panneau ?",
+                        "responseQuestion" : "Sens interdit" ,
+                        "typeQuestion" : "qcm"
+                    }, 
+                    {
+                        "idQuestion" : 2 ,
+                        "titleQuestion" : "Que signifie ce panneau ?",
+                        "responseQuestion" : "Sens interdit" ,
+                        "typeQuestion" : "qcm"
+                    }, 
+                    {
+                        "idQuestion" : 3 ,
+                        "titleQuestion" : "Que signifie ce panneau ?",
+                        "responseQuestion" : "Sens interdit" ,
+                        "typeQuestion" : "qcm"
+                    }
+                ]
+            }
+        }
+
+# Sessions [/sessions]
+    
+## Lister toutes les sessions [GET]
+
++ Response 200 (application/json)
+
+        { "data" :
+            {
+                "sessions" : [
+                    {
+                        "idSession" : 1,
+                        "nameSession" : "Session de cours Numéro 1 - Salle de cours",
+                        "lesson" : { idLesson : 1, nameLesson : "Première cours - Risque d'accident"}
+                    },
+                    {
+                        "idSession" : 2,
+                        "nameSession" : "Session N°4564543514",
+                        "lesson" : {}
+                    },
+                    {
+                        "idSession" : 3,
+                        "nameSession" : "Session de tests",
+                        "lesson" : {}
+                    },
+                    {
+                        "idSession" : 4,
+                        "nameSession" : "Session du cours 4",
+                        "lesson" : { idLesson : 4, nameLesson : "Quatrième cours - Prendre et quitter son véhicule" }
+                    }
+                ]
+            }
+        }
+
+## Créer une nouvelle session [POST]
+
++ Request (application/json)
+
+        {
+            "idSession": "5",
+            "nameSession" : "Session de cours : Risques d'accidents sur l'autoroute",
+            "idLesson" : {}
+        }
+
++ Response 201 (application/json)
+
+        {
+            "message" : "Une nouvelle session a été ajoutée",
+            "data" : {
+                "idSession": "5",
+                "nameSession": "Session de cours : Risques d'accidents sur l'autoroute",
+                "idLesson" : {}
+            }
+        }
+
+# Sessions ID [/sessions/{idSession}]
+
++ Parameters
+    + idSession (number) - ID de la session dans la base de données
+
+## Afficher une session [GET]
+
++ Response 201 (application/json)
+
+        { 
+            "data" : {
+                "idSession" : 1,
+                "nameSession" : "Session de cours Numéro 1 - Salle de cours",
+                "lesson" : { "idLesson" : 1, "nameLesson" : "Première cours - Risque d'accident"}
+            }
+        }
+
+
+## Modifier une session [PUT]
+
++ Request (application/json)
+
+        {
+            "idSession": "5",
+            "nameSession" : "Session de cours : Risques d'accidents sur les routes de campagne",
+            "idLesson" : {}
+        }
+
++ Response 201 (application/json)
+
+        {
+            "message" : "La session a été modifiée",
+            "data" : {
+                "idSession": "5",
+                "nameSession": "Session de cours : Risques d'accidents sur les routes de campagne",
+                "idLesson" : {}
+            }
+        }
+        
+## Supprimer une session [DELETE]
+
++ Request (application/json)
+
+        {
+            "idSession": "5"
+        }
+
++ Response 201 (application/json)
+
+        {
+            "message" : "La session a été supprimée"
+        }
+
+# Lessons [/lessons]
+
+## Lister toutes les cours [GET]
+
++ Response 200 (application/json)
+
+        { "data" :
+            {
+                "lessons" : [
+                    {
+                        "idLesson" : 1,
+                        "nameLesson" : "Première cours - Risque d'accident"
+                    },
+                    {
+                        "idLesson" : 2,
+                        "nameLesson" : "Deuxième cours - Alcool au volant"
+                    },
+                    {
+                        "idLesson" : 3,
+                        "nameLesson" : "Troisième cours - Panneaux de signalisation"
+                    },
+                    {
+                        "idLesson" : 4,
+                        "nameLesson" : "Quatrième cours - Prendre et quitter son véhicule"
+                    },
+                    {
+                        "idLesson" : 5,
+                        "nameLesson" : "TEST cours"
+                    },
+                    {
+                        "idLesson" : 6,
+                        "nameLesson" : "Sixième cours - Les autres usagers"
+                    }
+                ]
+            }
+        }
+
+## Créer un nouveau cours [POST]
+
++ Request (application/json)
+
+        {
+            "idSession": "5",
+            "nameSession" : "Session de cours : Risques d'accidents sur l'autoroute",
+            "idLesson" : {}
+        }
+
++ Response 201 (application/json)
+
+        {
+            "message" : "Le cours a été ajouté",
+            "data" : {
+                "idSession": "5",
+                "nameSession": "Session de cours : Risques d'accidents sur l'autoroute",
+                "idLesson" : {}
+            }
+        }
+        
+# Lesson ID [/lessons/{idLesson}]
+
++ Parameters
+    + idLesson (number) - ID du lesson dans la base de données
+
+## Afficher une question [GET]
+
++ Response 201 (application/json)
+
+        { 
+            "data" : {
+                    "idLesson" : 6,
+                    "nameLesson" : "Sixième cours - Les autres usagers"
+            }
+        }
+
+## Modifier un cours [PUT]
+
++ Request (application/json)
+
+        {
+            "idSession": "5",
+            "nameSession" : "Session de cours : Risques d'accidents sur les routes de campagne",
+            "idLesson" : {}
+        }
+
++ Response 201 (application/json)
+
+        {
+            "message" : "Le cours a été modifié",
+            "data" : {
+                "idSession": "5",
+                "nameSession": "Session de cours : Risques d'accidents sur les routes de campagne",
+                "idLesson" : {}
+            }
+        }
+        
+## Supprimer un cours [DELETE]
+
++ Request (application/json)
+
+        {
+            "idSession": "5"
+        }
+
++ Response 201 (application/json)
+
+        {
+            "message" : "Le cours a été supprimé"
+        }
+
+# Quizz [/quizz]
+
+## Lister les quizz [GET]
+
++ Response 201 (application/json)
+
+        { "data" : 
+            [
+                {
+                    "idQuizz" : 1,
+                    "numberOfQuestionQuizz" : 3,
+                    "questions" : [
+                        {
+                            "idQuestion" : 1,
+                            "titleQuestion" : "Que signifie ce panneau ?", 
+                            "responseQuestion" : "Sens interdit",
+                            "typeQuestion" : "qcm"
+                        },
+                        {
+                            "idQuestion" : 2,
+                            "titleQuestion" : "Que signifie ce panneau ?", 
+                            "responseQuestion" : "Sens interdit",
+                            "typeQuestion" : "qcm"
+                        },
+                        {
+                            "idQuestion" : 3,
+                            "titleQuestion" : "Que signifie ce panneau ?", 
+                            "responseQuestion" : "Sens interdit",
+                            "typeQuestion" : "qcm"
+                        }
+                    ]
+                }
+            ]
+        }
+
+## Créer un quizz [POST]
+
++ Request (application/json)
+
+        {
+            "idQuizz": 2,
+            "numberOfQuestionQuizz" : 4,
+            "questions" : {}
+        }
+
++ Response 201 (application/json)
+
+        {
+            "message" : "Le quizz a été ajouté",
+            "data" : {
+                "idQuizz": 2,
+                "numberOfQuestionQuizz": 4,
+                "questions" : {}
+            }
+        }
+
+# Quizz ID [/quizz/{idQuizz}]
+
++ Parameters
+    + idQuizz (number) - ID du quizz dans la base de données
+
+## Afficher un quizz [GET]
+
++ Response 201 (application/json)
+
+        { "data" : {
+            "idSession": 2,
+            "numberOfQuestionQuizz": 5
+        }
+
+
+## Modifier un quizz [PUT]
+
++ Request (application/json)
+
+        {
+            "idSession": 2,
+            "numberOfQuestionQuizz": 5
+        }
+
++ Response 201 (application/json)
+
+        {
+            "message" : "Le quizz a été modifié",
+            "data" : {
+                "idSession": 2,
+                "numberOfQuestionQuizz": 5
+            }
+        }
+
+## Supprimer un quizz [DELETE]
+
++ Response 201 (application/json)
+
+        {
+            "message" : "Le quizz a été supprimé"
+        }
+
+
+# Questions [/questions]
+
+## Lister les questions [GET]
+
++ Response 201 (application/json)
+
+        { "data" : 
+            [
+                {
+                    "idQuestion" : 1,
+                    "titleQuestion" : "Que signifie ce panneau ?", 
+                    "responseQuestion" : "Sens interdit",
+                    "typeQuestion" : "qcm",
+                },
+                {
+                    "idQuestion" : 2,
+                    "titleQuestion" : "Que signifie ce panneau ?", 
+                    "responseQuestion" : "Sens interdit",
+                    "typeQuestion" : "qcm"
+                },
+                {
+                    "idQuestion" : 3,
+                    "titleQuestion" : "Que signifie ce panneau ?", 
+                    "responseQuestion" : "Sens interdit",
+                    "typeQuestion" : "qcm"
+                }
+            ]
+        }
+
+
+## Créer une question [POST]
+
++ Request (application/json)
+
+        {
+            "idQuestion": 4,
+            "titleQuestion" : "Que signifie ce panneau ?",
+            "responseQuestion" : "Cédez le passage",
+            "typeQuestion" : "qcm"
+        }
+
++ Response 201 (application/json)
+
+        {
+            "message" : "La question a ajoutée",
+            "data" : {
+                "idQuestion": 4,
+                "titleQuestion" : "Que signifie ce panneau ?",
+                "responseQuestion" : "Cédez le passage",
+                "typeQuestion" : "qcm"
+            }
+        }
+
+
+# Question ID [/questions/{idQuestion}]
+
++ Parameters
+    + idQuestion (number) - ID de la question dans la base de données
+
+## Afficher une question [GET]
+
++ Response 201 (application/json)
+
+            { "data" :
+                {
+                    "idQuestion" : 1,
+                    "titleQuestion" : "Que signifie ce panneau ?", 
+                    "responseQuestion" : "Sens interdit",
+                    "typeQuestion" : "qcm"
+                },
+            }
+
+
+## Modifier une question [PUT]
+
++ Request (application/json)
+
+            {
+                "idQuestion" : 1,
+                "titleQuestion" : "Que signifie ce panneau ?", 
+                "responseQuestion" : "Sens interdit",
+                "typeQuestion" : "qcm"
+            }
+
++ Response 201 (application/json)
+
+        {
+            "message" : "La question a modifiée",
+            "data" : {
+            {
+                "idQuestion" : 1,
+                "titleQuestion" : "Que signifie ce panneau ?", 
+                "responseQuestion" : "Sens interdit",
+                "typeQuestion" : "qcm"
+            }
+        }
+
+## Supprimer une question [DELETE]
+
++ Request (application/json)
+
+        { 
+            "idQuestion" : 3 
+        }
+
++ Response 201 (application/json)
+
+        { 
+            "message" : "La question a été supprimée" 
+        }
+
+# Medias [/medias]
+
+## Lister les médias [GET]
+
++ Response 201 (application/json)
+
+        { 
+            "data" : 
+            [
+                {
+                    "idMedia" : 1,
+                    "nameMedia" : "Voiture accidentée",
+                    "typeMedia" : 3,
+                    "pathMedia" : "./voitureaccidentee.jpg",
+                    "memoMedia" : "Cela peut être servit dans plusieurs cours",
+                    "tagsMedia" : "voiture, accidentee",
+                    "hierarchy" :   
+                                    {
+                                        "idHierarchy" : 1, 
+                                        "idHiarchy_parent" : null , 
+                                        "typePermisHierarchy" : "B", 
+                                        "nameHierarchy" : "Permis B", 
+                                        "pathHierarchy" : "./B/"
+                                    }
+                }, 
+                {
+                    "idMedia" : 2,
+                    "nameMedia" : "" ,
+                    "typeMedia" : 3 ,
+                    "pathMedia" : "./panneauxdesignalisation.jpg" ,
+                    "memoMedia" : "" ,
+                    "tagsMedia" : "vehicule, moteur" ,
+                    "hierarchy" :
+                                    {
+                                        "idHierarchy" : 1, 
+                                        "idHiarchy_parent" : null , 
+                                        "typePermisHierarchy" : "B", 
+                                        "nameHierarchy" : "Permis B", 
+                                        "pathHierarchy" : "./B/"
+                                    }
+                },
+                {
+                    "idMedia" : 3,
+                    "nameMedia" : "permis de conduire" ,
+                    "typeMedia" : 3 ,
+                    "pathMedia" : "./156145464.jpg" ,
+                    "memoMedia" : "" ,
+                    "tagsMedia" : "permis, conduire" ,
+                    "hierarchy" :   
+                                    {
+                                        "idHierarchy" : 1, 
+                                        "idHiarchy_parent" : null , 
+                                        "typePermisHierarchy" : "B", 
+                                        "nameHierarchy" : "Permis B", 
+                                        "pathHierarchy" : "./B/"
+                                    }
+                },
+                {
+                    "idMedia" : 4,
+                    "nameMedia" : "Apercu du moteur d'un véhicule" ,
+                    "typeMedia" : 3 ,
+                    "pathMedia" : "./moteurvehicule.jpg" ,
+                    "memoMedia" : "" ,
+                    "tagsMedia" : "vehicule, moteur" ,
+                    "hierarchy" :
+                                    {
+                                        "idHierarchy" : 1, 
+                                        "idHiarchy_parent" : null , 
+                                        "typePermisHierarchy" : "B", 
+                                        "nameHierarchy" : "Permis B", 
+                                        "pathHierarchy" : "./B/"
+                                    }
+                }
+            ]
+        }
+
+# Medias ID [/medias{idMedia}]
+
++ Parameters
+    + idMedia (number) - ID du média dans la base de données
+
+## Afficher un média [GET]
+
++ Response 201 (application/json)
+
+            { "data" : 
+                {
+                    "idMedia" : 1,
+                    "nameMedia" : "Voiture accidentée" ,
+                    "typeMedia" : 3 ,
+                    "pathMedia" : "./voitureaccidentee.jpg" ,
+                    "memoMedia" : "Cela peut être servit dans plusieurs cours" ,
+                    "tagsMedia" : "voiture, accidentee" ,
+                    "hierarchy" :   
+                                    {
+                                        "idHierarchy" : 1, 
+                                        "idHiarchy_parent" : null , 
+                                        "typePermisHierarchy" : "B", 
+                                        "nameHierarchy" : "Permis B", 
+                                        "pathHierarchy" : "./B/"
+                                    }
+                }
+            }
